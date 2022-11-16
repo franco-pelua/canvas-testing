@@ -3,18 +3,23 @@ export default class Canvas {
         this.canvas = element;
         this.context = element.getContext('2d');
         this.objects = {};
+        this.rendering;
     }
 
     setup(fn) {
         return fn();
     }
 
-    render(framerate_ms, fn) {
-        setInterval(() => {
-            this.context.clearRect(0, 0, this.canvas.width, this.canvas.height);
-            return fn();
-        }, framerate_ms);
-    };
+    render = (fn) => { 
+        if(typeof this.rendering == 'undefined') this.rendering = fn;
+        this.#clear();
+        this.rendering();
+        requestAnimationFrame(this.render);
+    }
+
+    #clear() { 
+        return this.context.clearRect(0, 0, this.canvas.width, this.canvas.height);
+    }
 
     getObject(id) {
         return this.objects[id];
