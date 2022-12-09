@@ -25,15 +25,36 @@ export default class Canvas {
         return this.objects[id];
     }
 
-    rect(tag, px, py, w, h, color) {
+    // p_vector can be a Vector2D class or a plain literal object with x and y properties. 
+    rect(tag, position_vector, w, h, color) {
         if(this.objects[tag]) return alert('There already exists an object with such tag! Tags must be unique.');
 
         const obj = {
             id: tag, 
-            x: px, 
-            y: py, 
+            position: {
+                x: position_vector.x,
+                y: position_vector.y
+            },
             height: h, 
             width: w,
+            velocity: 0,
+            updatePosition: (show_speed = false) => {         
+                const obj_instance = this.objects[tag];
+
+                if(obj_instance.velocity === 0) return;
+
+                this.objects[tag] = {
+                    ...obj_instance,
+                    position: {
+                        x: obj_instance.position.x + obj_instance.velocity.x * 0.01,
+                        y: obj_instance.position.y + obj_instance.velocity.y * 0.01
+                    },
+                }  
+                
+                if(!show_speed) return;
+
+                obj_instance.velocity.show(this.context, obj_instance);
+            },
             update: (data) => {
                 if(!this.objects[tag]) return alert('The instance for this object does not exist');
 
@@ -50,7 +71,7 @@ export default class Canvas {
                 const obj = this.objects[tag];
                 this.context.beginPath();
                 this.context.fillStyle = color;
-                this.context.fillRect(obj.x, obj.y, obj.width, obj.height);
+                this.context.fillRect(obj.position.x, obj.position.y, obj.width, obj.height);
                 this.context.closePath();
                 return this.objects[tag];
             }
