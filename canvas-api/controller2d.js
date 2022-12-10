@@ -1,7 +1,8 @@
 export default class Controller2D {
     constructor(canvasElement) {
         this.canvas = canvasElement; 
-        this.actions = {}
+        this.actions = {};
+        this.active_keys = [];
     }
 
     // keys value must be 'ArrowUp', 'ArrowDown', 'ArrowLeft' or 'ArrowRight'
@@ -11,14 +12,19 @@ export default class Controller2D {
     }
 
     execute() {
-        for(let [key, value] of Object.entries(this.actions)) {
-            value.forEach(value => {
-                this.canvas.addEventListener(value.event, e => {
-                    if(!this.actions[e.key]) return;
-                    return this.actions[e.key].find((action => action.event === value.event)).callback();
-                })
-            })
-        }
+        this.canvas.addEventListener('keydown', e => {
+            const key = this.actions[e.key];
+            const action = key.find(action => action.event === 'keydown');
+            const args = action.arguments;
+            action.callback(...args);
+        })
+
+        this.canvas.addEventListener('keyup', e => {
+            const key = this.actions[e.key];
+            const action = key.find(action => action.event === 'keyup');
+            const args = action.arguments;
+            action.callback(...args);
+        })
     }
 
 }
