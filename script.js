@@ -80,8 +80,6 @@ c.setup(function() {
 
 c.render(function() {
     const myRect = c.getObject('myRect');
-
-    myRect.updatePosition(true);
-
     myRect.draw();
+    myRect.updatePosition(true);
 }) 

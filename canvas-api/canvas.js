@@ -41,7 +41,7 @@ export default class Canvas {
             updatePosition: (show_speed = false) => {         
                 const obj_instance = this.objects[tag];
 
-                if(obj_instance.velocity === 0) return;
+                if(!obj_instance.velocity || (!obj_instance.velocity.x && !obj_instance.velocity.y)) return;
 
                 this.objects[tag] = {
                     ...obj_instance,
