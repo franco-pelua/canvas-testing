@@ -12,6 +12,12 @@ export class Canvas {
         this.rendering;
     }
 
+    setup(width = document.documentElement.clientWidth - 20, height = document.documentElement.clientHeight - 20) {
+        this.canvas.width = width;
+        this.canvas.height = height;
+        this.canvas.focus();
+    }
+
     render = (fn) => { 
         if(typeof this.rendering == 'undefined') this.rendering = fn;
         this.#clear();

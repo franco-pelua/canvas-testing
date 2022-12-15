@@ -4,10 +4,9 @@ import Controller2D from './canvas-api/controller2d.js';
 const c = new Canvas(document.getElementById('canvas'));
 const myController = new Controller2D(c.canvas);
 
-c.canvas.width = document.documentElement.clientWidth - 20;
-c.canvas.height = document.documentElement.clientHeight - 20;
+c.setup();
 
-c.rect('myRect', new Vector2D(400, 400), 30, 30, 'blue');
+c.rect('myRect', {x: 400, y: 400}, 30, 30, 'blue');
 
 function onKeyDown(keyName, speedVector) {
     const myRect = c.getObject('myRect');
@@ -89,8 +88,6 @@ myController.assign({
 });
 
 myController.execute();
-
-c.canvas.focus();
 
 
 c.render(function() {
