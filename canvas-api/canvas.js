@@ -12,10 +12,6 @@ export class Canvas {
         this.rendering;
     }
 
-    setup(fn) {
-        return fn();
-    }
-
     render = (fn) => { 
         if(typeof this.rendering == 'undefined') this.rendering = fn;
         this.#clear();
