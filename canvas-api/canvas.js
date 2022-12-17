@@ -1,5 +1,5 @@
 import { Vector2D } from "./vector2d.js";
-import { Rectangle } from "./shapes.js";
+import { Circle, Rectangle } from "./shapes.js";
 
 export class Canvas {
     constructor(element) {
@@ -35,6 +35,12 @@ export class Canvas {
         if(this.objects[id]) return alert('There already exists an object with such id! ids must be unique.');
 
         this.objects[id] = new Rectangle(id, this.context, position_vector, h, w, color);
+    }
+    
+    circle(id, position = {x: 0, y: 0}, radius = 1, color, startAngle = 0, endAngle = 2*Math.PI, counterclockwise = false) {
+        if(this.objects[id]) return alert('There already exists an object with such id! ids must be unique.');
+
+        this.objects[id] = new Circle(id, this.context, position, radius, color, startAngle, endAngle, counterclockwise);
     }
 }   
 

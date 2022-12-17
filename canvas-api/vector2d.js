@@ -40,8 +40,14 @@ export class Vector2D {
     }
 
     show(canvas_context = document.getElementsByTagName('canvas')[0].getContext('2d'), assigned_shape) { 
-        const starting_x_point = assigned_shape.position.x + (assigned_shape.width / 2);
-        const starting_y_point = assigned_shape.position.y + (assigned_shape.height / 2);
+        let starting_x_point = assigned_shape.position.x + (assigned_shape.width / 2);
+        let starting_y_point = assigned_shape.position.y + (assigned_shape.height / 2);
+
+        if(assigned_shape.radius) {
+            starting_x_point = assigned_shape.position.x;
+            starting_y_point = assigned_shape.position.y;
+        }
+
         let final_x_point;
         let final_y_point;
 

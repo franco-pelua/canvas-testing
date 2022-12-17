@@ -9,26 +9,28 @@ c.setup();
 
 c.rect('myRect', {x: 400, y: 400}, 30, 30, 'blue');
 
+c.circle('myCircle', {x: 300, y: 300}, 20, 'red');
+console.log(c.getObject('myCircle'))
 
 c.getObject('myRect').setMaxVelocity(5);   
 
 function onKeyDown(keyName, acceleration) {
-    const myRect = c.getObject('myRect');
+    const myCircle = c.getObject('myCircle');
     const isKeyPressed = myController.active_keys.includes(keyName); 
 
     if(isKeyPressed) return null;
 
     myController.active_keys.push(keyName);
 
-    myRect.acceleration.add(acceleration);
+    myCircle.acceleration.add(acceleration);
 }
 
 function onKeyUp(keyName, acceleration) {
-    const myRect = c.getObject('myRect'); 
+    const myCircle = c.getObject('myCircle'); 
     const isKeyPressed = myController.active_keys.includes(keyName); 
 
     if(isKeyPressed) {
-        myRect.acceleration.substract(acceleration) 
+        myCircle.acceleration.substract(acceleration) 
     }                 
     
     const keyIndex = myController.active_keys.indexOf(keyName);
@@ -91,7 +93,10 @@ myController.execute();
 
 c.render(function() {
     const myRect = c.getObject('myRect');
-    console.log(myRect.velocity)
+    const myCircle = c.getObject('myCircle');  
+    myCircle.draw();  
+    console.log(myCircle.velocity)
+    myCircle.move(true);
     myRect.draw();
     myRect.move(true);
 }) 

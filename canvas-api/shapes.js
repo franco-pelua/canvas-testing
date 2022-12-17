@@ -5,7 +5,7 @@ import { Vector2D } from "./vector2d.js"
 // 
 
 class Shape {
-    constructor(id, canvas_context = document.getElementsByTagName('canvas')[0].getContext('2d'), position = {x: 0, y: 0 }, height, width) {
+    constructor(id, canvas_context = document.getElementsByTagName('canvas')[0].getContext('2d'), position = {x: 0, y: 0 }, height = 0, width = 0) {
         this.id = id, 
         this.canvas_context = canvas_context,
         this.position = {
@@ -62,4 +62,24 @@ export class Rectangle extends Shape {
         this.canvas_context.fillRect(this.position.x, this.position.y, this.width, this.height);
         this.canvas_context.closePath();
     }
+}
+
+export class Circle extends Shape { 
+    constructor(id, canvas_context, position, radius, color, startAngle = 0, endAngle = 2 * Math.PI, counterclockwise = false) {
+        super(id, canvas_context, position, 0, 0);
+        this.radius = Math.abs(radius),
+        this.color = color,
+        this.startAngle = startAngle,
+        this.endAngle = endAngle,
+        this.counterclockwise = counterclockwise
+    }
+
+    draw() {
+        this.canvas_context.beginPath();
+        this.canvas_context.fillStyle = this.color;
+        this.canvas_context.arc(this.position.x, this.position.y, this.radius, this.startAngle, this.endAngle, this.counterclockwise);
+        this.canvas_context.fill();
+    }
+
+    // REFERENCE: https://developer.mozilla.org/en-US/docs/Web/API/CanvasRenderingContext2D/arc
 }
