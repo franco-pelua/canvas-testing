@@ -1,4 +1,5 @@
-import { Canvas, Vector2D } from './canvas-api/canvas.js';
+import { Canvas } from './canvas-api/canvas.js';
+import { Vector2D }  from './canvas-api/vector2d.js'
 import Controller2D from './canvas-api/controller2d.js';
 
 const c = new Canvas(document.getElementById('canvas'));
@@ -8,7 +9,10 @@ c.setup();
 
 c.rect('myRect', {x: 400, y: 400}, 30, 30, 'blue');
 
-function onKeyDown(keyName, speedVector) {
+
+c.getObject('myRect').setMaxVelocity(5);   
+
+function onKeyDown(keyName, acceleration) {
     const myRect = c.getObject('myRect');
     const isKeyPressed = myController.active_keys.includes(keyName); 
 
@@ -16,19 +20,15 @@ function onKeyDown(keyName, speedVector) {
 
     myController.active_keys.push(keyName);
 
-    myRect.update({ 
-        velocity: myRect.velocity.add(speedVector)
-    });  
+    myRect.acceleration.add(acceleration);
 }
 
-function onKeyUp(keyName, speedVector) {
+function onKeyUp(keyName, acceleration) {
     const myRect = c.getObject('myRect'); 
     const isKeyPressed = myController.active_keys.includes(keyName); 
 
     if(isKeyPressed) {
-        myRect.update({ 
-            velocity: myRect.velocity.substract(speedVector)
-        });   
+        myRect.acceleration.substract(acceleration) 
     }                 
     
     const keyIndex = myController.active_keys.indexOf(keyName);
@@ -41,58 +41,57 @@ myController.assign({
         {
             event: 'keydown',
             callback: onKeyDown,
-            arguments: ['ArrowUp', new Vector2D(0, -100)]
+            arguments: ['ArrowUp', new Vector2D(0, -0.01)]
         },
         {
             event: 'keyup',
             callback: onKeyUp,
-            arguments: ['ArrowUp', new Vector2D(0, -100)]
+            arguments: ['ArrowUp', new Vector2D(0, -0.01)]
         }
     ],
     'ArrowDown': [
         {
             event: 'keydown',
             callback: onKeyDown,
-            arguments: ['ArrowDown', new Vector2D(0, 100)]
+            arguments: ['ArrowDown', new Vector2D(0, 0.01)]
         },
         {
             event: 'keyup',
             callback: onKeyUp,
-            arguments: ['ArrowDown', new Vector2D(0, 100)]
+            arguments: ['ArrowDown', new Vector2D(0, 0.01)]
         }
     ],
     'ArrowLeft': [
         {
             event: 'keydown',
             callback: onKeyDown,
-            arguments: ['ArrowLeft', new Vector2D(-100, 0)]
+            arguments: ['ArrowLeft', new Vector2D(-0.01, 0)]
         },
         {
             event: 'keyup',
             callback: onKeyUp,
-            arguments: ['ArrowLeft', new Vector2D(-100, 0)]
+            arguments: ['ArrowLeft', new Vector2D(-0.01, 0)]
         }
     ],
     'ArrowRight': [
         {
             event: 'keydown',
             callback: onKeyDown,
-            arguments: ['ArrowRight', new Vector2D(100, 0)]
+            arguments: ['ArrowRight', new Vector2D(0.01, 0)]
         },
         {
             event: 'keyup',
             callback: onKeyUp,
-            arguments: ['ArrowRight', new Vector2D(100, 0)]
+            arguments: ['ArrowRight', new Vector2D(0.01, 0)]
         }
     ]
 });
 
 myController.execute();
 
-
 c.render(function() {
     const myRect = c.getObject('myRect');
     console.log(myRect.velocity)
     myRect.draw();
-    myRect.updatePosition(true);
+    myRect.move(true);
 }) 
