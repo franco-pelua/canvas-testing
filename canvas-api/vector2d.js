@@ -40,8 +40,8 @@ export class Vector2D {
     }
 
     show(canvas_context = document.getElementsByTagName('canvas')[0].getContext('2d'), assigned_shape) { 
-        let starting_x_point = assigned_shape.position.x + (assigned_shape.width / 2);
-        let starting_y_point = assigned_shape.position.y + (assigned_shape.height / 2);
+        let starting_x_point = assigned_shape.position.x + (assigned_shape?.width / 2);
+        let starting_y_point = assigned_shape.position.y + (assigned_shape?.height / 2);
 
         if(assigned_shape.radius) {
             starting_x_point = assigned_shape.position.x;
@@ -63,10 +63,10 @@ export class Vector2D {
             final_y_point = this.y < 0 ? starting_y_point - this.mag() : starting_y_point + this.mag();
         }
         
-        canvas_context.strokeStyle = 'black';
+        canvas_context.strokeStyle = 'red';
         canvas_context.beginPath();
         canvas_context.moveTo(starting_x_point, starting_y_point);
-        canvas_context.lineTo(final_x_point, final_y_point);
+        canvas_context.lineTo(final_x_point + 30, final_y_point + 30);
         canvas_context.stroke();
     }
 }
