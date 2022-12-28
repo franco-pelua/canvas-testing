@@ -9,14 +9,35 @@ export class Vector2D {
         this.y += vector.y;        
     }
 
+    static add(vector1, vector2) {
+        return new Vector2D(vector1.x + vector2.x, vector1.y + vector2.y);
+    }
+
     substract(vector) {
         this.x -= vector.x;
         this.y  -= vector.y;
     }
 
+    static substract(vector1, vector2) {
+        return new Vector2D(vector1.x - vector2.x, vector1.y - vector2.y);
+    }
+
     multiply(factor) {
         this.x *= factor;
         this.y *= factor;    
+    }
+
+    static multiply(vector, factor) {
+        return new Vector2D(vector.x * factor, vector.y * factor);
+    }
+
+    divide(factor) {
+        this.x /= factor;
+        this.y /= factor;
+    }
+
+    static divide(vector, factor) {
+        return new Vector2D(vector.x / factor, vector.y / factor);
     }
    
     // https://en.wikipedia.org/wiki/Pythagorean_theorem
@@ -54,19 +75,19 @@ export class Vector2D {
         if(this.x === 0) {
             final_x_point = starting_x_point;
         } else {
-            final_x_point = this.x < 0 ? starting_x_point - this.mag() : starting_x_point + this.mag();
+            final_x_point = this.x < 0 ? starting_x_point + this.mag() : starting_x_point - this.mag();
         }
 
         if(this.y === 0) {
             final_y_point = starting_y_point;
         } else {
-            final_y_point = this.y < 0 ? starting_y_point - this.mag() : starting_y_point + this.mag();
+            final_y_point = this.y < 0 ? starting_y_point + this.mag() : starting_y_point - this.mag();
         }
         
         canvas_context.strokeStyle = 'red';
         canvas_context.beginPath();
         canvas_context.moveTo(starting_x_point, starting_y_point);
-        canvas_context.lineTo(final_x_point + 30, final_y_point + 30);
+        canvas_context.lineTo(final_x_point, final_y_point);
         canvas_context.stroke();
     }
 }
