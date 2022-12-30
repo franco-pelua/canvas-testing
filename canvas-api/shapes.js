@@ -1,7 +1,7 @@
 import { Vector2D } from "./vector2d.js"
 
 class Shape {
-    constructor(id, canvas_context = document.getElementsByTagName('canvas')[0].getContext('2d'), position = {x: 0, y: 0 }, mass) {
+    constructor(id, canvas_context, position, mass) {
         this.id = id, 
         this.canvas_context = canvas_context,
         this.position = {
@@ -9,8 +9,8 @@ class Shape {
             y: position.y
         },
         this.mass = mass, 
-        this.acceleration = new Vector2D(0, 0), // Must be updated with its setter
-        this.velocity = new Vector2D(0, 0) // Must be updated with its setter
+        this.acceleration = new Vector2D(0, 0),
+        this.velocity = new Vector2D(0, 0)
     }
 
     applyForce(force){
@@ -61,7 +61,7 @@ export class Rectangle extends Shape {
 }
 
 export class Circle extends Shape { 
-    constructor(id, canvas_context, position, mass, radius, color, startAngle = 0, endAngle = 2 * Math.PI, counterclockwise = false) {
+    constructor(id, canvas_context, position, mass, radius, color, startAngle, endAngle, counterclockwise) {
         super(id, canvas_context, position, mass);
         this.radius = Math.abs(radius),
         this.color = color,
