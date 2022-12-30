@@ -7,11 +7,16 @@ const myController = new Controller2D(c.canvas);
 
 c.setup();
 
-c.arc('myCircle', {x: 300, y: 300}, 2, 20, 'red'); 
+c.arc({ 
+    id: 'myCircle', 
+    position: {x: 300, y: 300}, 
+    mass: 2, 
+    radius: 20, 
+    color: 'red'
+}); 
 
 function onKeyDown(acceleration) {
     const myCircle = c.getObject('myCircle');
-    console.log(acceleration)
     myCircle.applyForce(acceleration);
 }
 
